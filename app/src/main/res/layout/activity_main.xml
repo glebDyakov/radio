@@ -7,12 +7,217 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/powerBtnLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Включите Радио."
+        android:textSize="34sp"
+        android:translationY="-250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:translationX="125dp"
+        android:translationY="125dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutOfPlayer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/tipleDot"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#00E40E0E"
+            android:text="⋮"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:translationX="0dp"
+            android:translationY="0dp" />
+
+        <TextView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Поиск"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutOfPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#E8E4E4"
+        android:orientation="vertical"
+        android:translationY="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layoutOfButtons"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/power"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:width="25dp"
+                android:backgroundTint="#FFFFFF"
+                android:maxWidth="25dp"
+                android:minWidth="25dp"
+                android:text="|"
+                android:textColor="#AFAFAF"
+                app:cornerRadius="200dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/record"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:text="."
+                android:textAlignment="center"
+                android:textColor="#FF0000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:cornerRadius="200dp"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutOfCurrentStation"
+            android:layout_width="325dp"
+            android:layout_height="65dp"
+            android:orientation="horizontal"
+            android:translationX="30dp"
+            android:translationY="0dp">
+
+            <Button
+                android:id="@+id/previousStationBtn"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#00FFFFFF"
+                android:shadowColor="#00FFFFFF"
+                android:textColor="#000000"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/currentStation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxWidth="2sp"
+                android:text="92.8"
+                android:textAlignment="viewEnd"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="1sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/favoriteBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/star"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/measure"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="MHz" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/nextStationBtn"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#00FFFFFF"
+                android:shadowColor="#00FFFFFF"
+                android:textColor="#000000"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/powerLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Включите Радио."
+            android:textAlignment="center"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutOfStations"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#BFBABA"
+        android:orientation="vertical"
+        android:translationY="335dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layoutOfPlayer"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutOfSwitchContent"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#B87676"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+        android:translationY="325dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/switchFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Избранное"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/switchStations"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Станции"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
