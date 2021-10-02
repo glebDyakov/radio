@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -21,6 +25,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,12 +34,64 @@ public class MainActivity extends AppCompatActivity {
     public boolean isStations = true;
     public int cursorOfStations = 13;
     public SQLiteDatabase db;
+    public ArrayList<MediaPlayer> audios;
+    public MediaPlayer currentRadioStation;
 
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        currentRadioStation = MediaPlayer.create(getApplicationContext(), R.raw.one);
+        audios = new ArrayList<MediaPlayer>();
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.one));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.two));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.three));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.four));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.six));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.one));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.seven));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.eight));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.nine));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.one));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.eight));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.one));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.nine));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.eight));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.four));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.six));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.four));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.six));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.one));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.eight));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.nine));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.four));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.seven));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.six));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.five));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.three));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.seven));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.ten));
+        audios.add(MediaPlayer.create(getApplicationContext(), R.raw.six));
 
         db = openOrCreateDatabase("bowser.db", SQLiteDatabase.CREATE_IF_NECESSARY, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS favoritesstations (_id INTEGER PRIMARY KEY AUTOINCREMENT, station TEXT);");
@@ -178,6 +235,13 @@ public class MainActivity extends AppCompatActivity {
         station.put("number", "107.8");
         stations.add(station);
 
+        SensorManager sensorManager;
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        List<Sensor> deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
+        for(Sensor deviceSensor : deviceSensors){
+            Log.d("mytag", "Название модуля: " + deviceSensor.getName().toString());
+        }
+
         LinearLayout layoutOfStations = findViewById(R.id.layoutOfStations);
 
         for(int stationIdx = 0; stationIdx < stations.size(); stationIdx++){
@@ -196,8 +260,38 @@ public class MainActivity extends AppCompatActivity {
         tripleDot.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                MenuItem downloads = menu.add(Menu.NONE, 101, Menu.NONE, "Загрузки");
+                MenuItem downloads = menu.add(Menu.NONE, 101, Menu.NONE, "Изменить");
                 downloads.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                MenuItem playDrivenAudio = menu.add(Menu.NONE, 102, Menu.NONE, "Воспроизв. через динамик");
+                playDrivenAudio.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                MenuItem records = menu.add(Menu.NONE, 103, Menu.NONE, "Записи");
+                records.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return false;
+                    }
+                });
+                MenuItem settings = menu.add(Menu.NONE, 104, Menu.NONE, "Настройки");
+                settings.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        return false;
+                    }
+                });
+                MenuItem feedback = menu.add(Menu.NONE, 105, Menu.NONE, "Свяжитесь с нами");
+                feedback.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         return false;
@@ -227,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 if(isPower){
                     power.setTextColor(Color.rgb(0, 0, 255));
                     search.setTextColor(Color.rgb(0, 0, 0));
-                    powerBtnLabel.setText("Играет " + "92.8");
+                    powerBtnLabel.setText("Играет " + stations.get(cursorOfStations));
                     record.setVisibility(View.VISIBLE);
                     currentStation.setTextColor(Color.rgb(0, 0, 0));
                     powerLabel.setText("");
@@ -237,8 +331,13 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Log.d("mytag", "на предыдущую станцию");
                             if(cursorOfStations > 0) {
+                                audios.get(cursorOfStations).stop();
                                 cursorOfStations--;
+                                audios.get(cursorOfStations).start();
                                 currentStation.setText(stations.get(cursorOfStations).get("number").toString());
+                                powerBtnLabel.setText("Играет " + stations.get(cursorOfStations).get("number"));
+                                currentRadioStation = MediaPlayer.create(getApplicationContext(), R.raw.one);
+                                currentRadioStation.start();
                             }
                         }
                     });
@@ -248,12 +347,20 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             Log.d("mytag", "на следующую станцию");
                             if(cursorOfStations < stations.size() - 1) {
+                                audios.get(cursorOfStations).stop();
                                 cursorOfStations++;
+                                audios.get(cursorOfStations).start();
                                 currentStation.setText(stations.get(cursorOfStations).get("number").toString());
+                                powerBtnLabel.setText("Играет " + stations.get(cursorOfStations).get("number"));
+                                currentRadioStation = MediaPlayer.create(getApplicationContext(), R.raw.one);
+                                currentRadioStation.start();
                             }
                         }
                     });
                     favoriteBtn.setVisibility(View.VISIBLE);
+                    audios.get(cursorOfStations).start();
+                    currentRadioStation = MediaPlayer.create(getApplicationContext(), R.raw.one);
+                    currentRadioStation.start();
                 } else if(!isPower){
                     power.setTextColor(Color.rgb(175, 175, 175));
                     search.setTextColor(Color.rgb(175, 175, 175));
@@ -271,6 +378,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     favoriteBtn.setVisibility(View.INVISIBLE);
+                    audios.get(cursorOfStations).stop();
                 }
             }
         });
